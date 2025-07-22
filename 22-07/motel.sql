@@ -1,0 +1,17 @@
+CREATE DATABASE motel_db;
+
+USE motel_db;
+
+CREATE TABLE clientes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    cpf VARCHAR(14) NOT NULL,
+    telefone VARCHAR(20) NOT NULL
+);
+
+CREATE TABLE quartos (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    numero VARCHAR(10) NOT NULL,
+    preco DECIMAL(10,2) NOT NULL,
+    capacidade INT NOT NULL
+);
