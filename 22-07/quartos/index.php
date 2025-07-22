@@ -6,13 +6,23 @@
     <link rel="stylesheet" href="../style.css">
 </head>
 <body>
-    <h2>Quartos</h2>
+    <h2>Cadastro de Quartos</h2>
+
+    <?php if (isset($_GET['sucesso'])): ?>
+        <p class="success-message">Quarto cadastrado com sucesso!</p>
+    <?php endif; ?>
 
     <form action="adicionar.php" method="post">
-        <input type="text" name="numero" placeholder="Número do Quarto" required>
-        <input type="text" name="preco" placeholder="Preço" required>
-        <input type="number" name="capacidade" placeholder="Capacidade" required>
-        <button type="submit">Adicionar</button>
+        <label>Número do Quarto</label>
+        <input type="text" name="numero" placeholder="Ex: 101" required>
+
+        <label>Preço</label>
+        <input type="text" name="preco" placeholder="Ex: 120.00" required>
+
+        <label>Capacidade</label>
+        <input type="number" name="capacidade" placeholder="Ex: 2" required>
+
+        <button type="submit">Cadastrar Quarto</button>
     </form>
 
     <h3>Lista de Quartos</h3>
@@ -20,11 +30,19 @@
         <?php
         $stmt = $pdo->query("SELECT * FROM quartos");
         while ($row = $stmt->fetch()) {
-            echo "<li>Quarto {$row['numero']} - R$ {$row['preco']} - Capacidade: {$row['capacidade']}
-            <a href='deletar.php?id={$row['id']}'>Excluir</a></li>";
+            echo "<li><span>Quarto " .
+                 htmlspecialchars($row['numero']) . " - R$ " .
+                 htmlspecialchars($row['preco']) . " - Capacidade: " .
+                 htmlspecialchars($row['capacidade']) .
+                 "</span>
+                <form action='deletar.php' method='get' style='display:inline;'>
+                    <input type='hidden' name='id' value='{$row['id']}'>
+                    <button class='btn-delete' type='submit'>Excluir</button>
+                </form>
+            </li>";
         }
         ?>
     </ul>
-    <a href="../index.php">Voltar</a>
+    <a class="back-link" href="../index.php">← Voltar ao menu</a>
 </body>
 </html>
